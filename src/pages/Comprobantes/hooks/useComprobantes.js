@@ -3,24 +3,54 @@ import { comprobantesMock } from "../../../mocks/comprobantes";
 
 export function useComprobantes() {
   const [filtros, setFiltros] = useState({
-    fechaInicio: "2023-10-01",
-    fechaFin: "2023-10-24",
-    tipo: "Todos",
+    fechaInicio: "",
+    fechaFin: "",
+    tipo: "TODOS",
     busqueda: ""
   });
 
   const [pagina, setPagina] = useState(1);
   const itemsPorPagina = 20;
 
+  // Función para convertir "24 Oct 2023, 14:30" a objeto Date
+  const parseFecha = (fechaStr) => {
+    const meses = {
+      "Jan": 0, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 5,
+      "Jul": 6, "Aug": 7, "Sep": 8, "Oct": 9, "Nov": 10, "Dec": 11
+    };
+    const partes = fechaStr.split(" ");
+    const dia = parseInt(partes[0]);
+    const mes = meses[partes[1]];
+    const anio = parseInt(partes[2].replace(",", ""));
+    return new Date(anio, mes, dia);
+  };
+
   // Filtrado de datos
   const datosFiltrados = useMemo(() => {
-    return comprobantesMock.filter(item => {
-      const matchTipo = filtros.tipo === "Todos" || item.tipo === filtros.tipo;
+    return comprobantesMock.filter(c => {
+      // Búsqueda por texto (SIEMPRE REACTIVA)
       const matchBusqueda = 
-        item.cliente.toLowerCase().includes(filtros.busqueda.toLowerCase()) ||
-        item.numero.includes(filtros.busqueda);
+        c.numero.toLowerCase().includes(filtros.busqueda.toLowerCase()) ||
+        c.cliente.toLowerCase().includes(filtros.busqueda.toLowerCase());
+
+      // Filtros de Botón (Tipo y Fechas)
+      const matchTipo = filtros.tipo === "TODOS" || c.tipo === filtros.tipo;
       
-      return matchTipo && matchBusqueda;
+      let matchFecha = true;
+      if (filtros.fechaInicio || filtros.fechaFin) {
+        const fechaComprobante = parseFecha(c.fecha);
+        
+        if (filtros.fechaInicio) {
+          const inicio = new Date(filtros.fechaInicio + "T00:00:00");
+          if (fechaComprobante < inicio) matchFecha = false;
+        }
+        if (filtros.fechaFin) {
+          const fin = new Date(filtros.fechaFin + "T23:59:59");
+          if (fechaComprobante > fin) matchFecha = false;
+        }
+      }
+
+      return matchBusqueda && matchTipo && matchFecha;
     });
   }, [filtros]);
 
