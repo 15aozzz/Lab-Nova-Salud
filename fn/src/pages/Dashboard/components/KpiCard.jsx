@@ -1,20 +1,11 @@
-import * as Icons from "lucide-react";
-
-export default function KpiCard({ titulo, valor, iconName, color, onClick }) {
-  const Icon = Icons[iconName] || Icons.HelpCircle;
-
+export default function KpiCard({ titulo, valor, onClick }) {
   return (
     <div 
       onClick={onClick}
-      className={`bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between ${onClick ? 'cursor-pointer hover:shadow-md transition-shadow' : ''}`}
+      className={`bg-surface-container-lowest rounded-lg p-4 border border-outline-variant flex flex-col gap-1 relative overflow-hidden ${onClick ? 'cursor-pointer hover:shadow-md transition-shadow' : ''}`}
     >
-      <div>
-        <p className="text-sm font-medium text-gray-500 mb-1">{titulo}</p>
-        <h3 className="text-2xl font-bold text-[#2C2420]">{valor}</h3>
-      </div>
-      <div className={`p-3 rounded-lg ${color}`}>
-        <Icon className="w-6 h-6 text-[#895202]" />
-      </div>
+      <span className="text-[11px] font-bold tracking-wider text-on-surface-variant uppercase">{titulo}</span>
+      <span className="text-[20px] font-semibold text-primary-container">{valor}</span>
     </div>
   );
 }

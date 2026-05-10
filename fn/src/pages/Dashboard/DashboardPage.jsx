@@ -69,31 +69,28 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="space-y-card_gap animate-in fade-in duration-500 pb-12">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-bold text-[#2C2420]">Dashboard</h1>
-          <p className="text-gray-500 mt-1">Bienvenido, aquí está el resumen de hoy</p>
+          <h2 className="text-[28px] font-semibold tracking-tight text-primary-container mb-1">Dashboard</h2>
+          <p className="text-body-md text-on-surface-variant">Bienvenido, aquí está el resumen de hoy</p>
         </div>
         <button 
           onClick={() => navigate("/nueva-venta")}
-          className="flex items-center justify-center gap-2 bg-[#a16207] hover:bg-[#854d0e] text-white px-6 py-3 rounded-lg font-bold shadow-lg shadow-orange-900/20 transition-all active:scale-95"
+          className="bg-secondary text-on-secondary px-4 py-2 rounded-lg text-body-md hover:opacity-90 transition-opacity flex items-center gap-2 shadow-sm"
         >
-          <Plus className="w-5 h-5" />
+          <Plus className="w-[18px] h-[18px]" />
           Nueva Venta
         </button>
       </div>
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-card_gap">
         {data.kpiData.map((kpi, index) => (
           <KpiCard key={index} {...kpi} />
         ))}
       </div>
 
-      {/* Middle Section: Chart and Alerts */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-card_gap">
         <div className="lg:col-span-8">
           <GraficoVentas datos={data.salesData} />
         </div>
@@ -102,7 +99,6 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Bottom Section: Receipts */}
       <div className="w-full">
         <UltimosComprobantes comprobantes={data.recentReceipts} />
       </div>

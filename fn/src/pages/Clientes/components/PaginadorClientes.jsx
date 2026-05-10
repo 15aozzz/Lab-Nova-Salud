@@ -8,17 +8,17 @@ export default function PaginadorClientes({ actual, totalResultados, itemsPorPag
   const fin = Math.min(actual * itemsPorPagina, totalResultados);
 
   return (
-    <div className="flex items-center justify-between py-4 px-1">
-      <p className="text-sm text-gray-500">
-        Mostrando <span className="font-bold text-[#2C2420]">{inicio}</span> a{" "}
-        <span className="font-bold text-[#2C2420]">{fin}</span> de{" "}
-        <span className="font-bold text-[#2C2420]">{totalResultados}</span> clientes
+    <div className="flex items-center justify-between py-2 px-1">
+      <p className="text-body-md text-on-surface-variant">
+        Mostrando <span className="font-bold text-on-surface">{inicio}</span> a{" "}
+        <span className="font-bold text-on-surface">{fin}</span> de{" "}
+        <span className="font-bold text-on-surface">{totalResultados}</span> clientes
       </p>
       <div className="flex items-center gap-2">
         <button
           onClick={() => onCambioPagina(actual - 1)}
           disabled={actual === 1}
-          className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="p-2 rounded-lg hover:bg-surface-container text-on-surface-variant disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
@@ -31,15 +31,15 @@ export default function PaginadorClientes({ actual, totalResultados, itemsPorPag
           }, [])
           .map((p, idx) =>
             p === "..." ? (
-              <span key={`dots-${idx}`} className="px-1 text-gray-400 text-sm">...</span>
+              <span key={`dots-${idx}`} className="px-1 text-on-surface-variant text-body-md">...</span>
             ) : (
               <button
                 key={p}
                 onClick={() => onCambioPagina(p)}
-                className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${
+                className={`w-8 h-8 rounded text-body-md font-bold transition-all ${
                   p === actual
-                    ? "bg-[#895202] text-white shadow-md"
-                    : "text-gray-500 hover:bg-gray-100"
+                    ? "bg-secondary text-on-secondary shadow-sm"
+                    : "text-on-surface-variant hover:bg-surface-container"
                 }`}
               >
                 {p}
@@ -49,7 +49,7 @@ export default function PaginadorClientes({ actual, totalResultados, itemsPorPag
         <button
           onClick={() => onCambioPagina(actual + 1)}
           disabled={actual === totalPaginas}
-          className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="p-2 rounded-lg hover:bg-surface-container text-on-surface-variant disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
           <ChevronRight className="w-4 h-4" />
         </button>

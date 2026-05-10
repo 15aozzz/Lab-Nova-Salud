@@ -35,9 +35,9 @@ export default function TablaProductos({ productos, onActualizarCantidad, onElim
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex-1 relative">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-        <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+    <div className="bg-surface-container-lowest rounded-lg border border-outline-variant p-card_gap flex-1 relative">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-card_gap">
+        <h3 className="text-[11px] font-bold tracking-wider text-primary-container">
           Listado de Productos
         </h3>
         
@@ -47,29 +47,28 @@ export default function TablaProductos({ productos, onActualizarCantidad, onElim
             value={busqueda}
             onChange={handleBusqueda}
             placeholder="Digite el producto..."
-            className="w-full bg-gray-50 border border-gray-100 rounded-full pl-12 pr-6 py-3 text-sm text-gray-700 outline-none focus:ring-2 focus:ring-orange-100 transition-all shadow-inner"
+            className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-10 pr-4 py-[7px] text-body-md text-on-surface outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all"
           />
-          <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-300" />
+          <Search className="w-[18px] h-[18px] absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" />
 
-          {/* Resultados de búsqueda flotantes */}
           {cargando && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-100 rounded-xl shadow-2xl z-50 overflow-hidden p-4 text-center">
-              <div className="animate-spin w-5 h-5 border-2 border-orange-500 border-t-transparent rounded-full inline-block"></div>
+            <div className="absolute top-full left-0 right-0 mt-2 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-lg z-50 overflow-hidden p-4 text-center">
+              <div className="animate-spin w-5 h-5 border-2 border-secondary border-t-transparent rounded-full inline-block"></div>
             </div>
           )}
           {!cargando && resultados.length > 0 && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-100 rounded-xl shadow-2xl z-50 overflow-hidden max-h-60 overflow-y-auto">
+            <div className="absolute top-full left-0 right-0 mt-2 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-lg z-50 overflow-hidden max-h-60 overflow-y-auto">
               {resultados.map(p => (
                 <button
                   key={p.id_producto}
                   onClick={() => seleccionarProducto(p)}
-                  className="w-full text-left px-6 py-4 hover:bg-gray-50 transition-colors flex items-center justify-between border-b border-gray-50 last:border-0"
+                  className="w-full text-left px-4 py-3 hover:bg-surface-container transition-colors flex items-center justify-between border-b border-outline-variant last:border-0"
                 >
                   <div>
-                    <p className="text-sm font-bold text-gray-700">{p.nombre_comercial}</p>
-                    <p className="text-[10px] text-gray-400 uppercase">{p.principio_activo}</p>
+                    <p className="text-body-md font-bold text-on-surface">{p.nombre_comercial}</p>
+                    <p className="text-label-caps text-on-surface-variant">{p.principio_activo}</p>
                   </div>
-                  <span className="text-xs font-bold text-[#a16207]">Stock: {p.stock_actual_unidades}</span>
+                  <span className="text-label-caps font-bold text-secondary">Stock: {p.stock_actual_unidades}</span>
                 </button>
               ))}
             </div>
@@ -80,16 +79,16 @@ export default function TablaProductos({ productos, onActualizarCantidad, onElim
       <div className="overflow-x-auto">
         <table className="w-full text-left">
           <thead>
-            <tr className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.1em] border-b border-gray-50">
-              <th className="pb-4">Descripción</th>
-              <th className="pb-4">UND</th>
-              <th className="pb-4 text-center">Valor</th>
-              <th className="pb-4 text-center">Cantidad</th>
-              <th className="pb-4 text-center">IGV</th>
-              <th className="pb-4 text-right">Importe</th>
+            <tr className="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant border-b border-outline-variant">
+              <th className="pb-3 px-4">Descripción</th>
+              <th className="pb-3 px-4">UND</th>
+              <th className="pb-3 px-4 text-center">Valor</th>
+              <th className="pb-3 px-4 text-center">Cantidad</th>
+              <th className="pb-3 px-4 text-center">IGV</th>
+              <th className="pb-3 px-4 text-right">Importe</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50">
+          <tbody className="divide-y divide-outline-variant">
             {productos.length > 0 ? (
               productos.map((prod) => (
                 <FilaProducto 
@@ -102,7 +101,7 @@ export default function TablaProductos({ productos, onActualizarCantidad, onElim
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="py-12 text-center text-gray-300 italic text-sm">
+                <td colSpan="6" className="py-12 text-center text-on-surface-variant italic text-body-md">
                   No hay productos agregados a la venta
                 </td>
               </tr>
@@ -113,4 +112,3 @@ export default function TablaProductos({ productos, onActualizarCantidad, onElim
     </div>
   );
 }
-

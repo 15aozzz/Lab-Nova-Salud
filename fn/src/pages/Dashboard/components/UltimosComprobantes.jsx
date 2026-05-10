@@ -1,37 +1,37 @@
 export default function UltimosComprobantes({ comprobantes }) {
   return (
-    <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-      <h3 className="text-xl font-bold text-[#2C2420] mb-8">Últimos comprobantes</h3>
+    <div className="bg-surface-container-lowest rounded-lg p-6 border border-outline-variant shadow-[0_4px_12px_rgba(22,15,12,0.02)]">
+      <h3 className="text-h2 font-semibold tracking-tight text-primary-container mb-6">Últimos comprobantes</h3>
       
       <div className="overflow-x-auto">
         <table className="w-full text-left">
           <thead>
-            <tr className="text-xs font-semibold text-gray-400 uppercase tracking-wider border-b border-gray-50 pb-4">
-              <th className="pb-6">Fecha</th>
-              <th className="pb-6">Tipo</th>
-              <th className="pb-6">Número</th>
-              <th className="pb-6">Cliente</th>
-              <th className="pb-6">Vendedor</th>
-              <th className="pb-6 text-right">Total</th>
+            <tr className="text-[11px] font-bold tracking-wider text-on-surface-variant uppercase border-b border-surface-container">
+              <th className="pb-4 font-medium">Fecha</th>
+              <th className="pb-4 font-medium">Tipo</th>
+              <th className="pb-4 font-medium">Número</th>
+              <th className="pb-4 font-medium">Cliente</th>
+              <th className="pb-4 font-medium">Vendedor</th>
+              <th className="pb-4 text-right font-medium">Total</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50">
+          <tbody className="divide-y divide-surface-container">
             {comprobantes.map((item) => (
-              <tr key={item.id} className="text-sm hover:bg-gray-50 transition-colors">
-                <td className="py-6 text-gray-500">{item.fecha}</td>
-                <td className="py-6">
-                  <span className={`inline-flex items-center px-3 py-1 rounded text-[10px] font-bold ${
+              <tr key={item.id} className="text-body-md hover:bg-surface-container-low transition-colors">
+                <td className="py-4 text-on-surface-variant">{item.fecha}</td>
+                <td className="py-4">
+                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold ${
                     item.tipo === 'FACTURA' 
-                      ? 'bg-[#2C2420] text-white' 
-                      : 'bg-gray-100 text-gray-600'
+                      ? 'bg-primary-fixed text-on-primary-fixed' 
+                      : 'bg-secondary-fixed text-on-secondary-fixed'
                   }`}>
                     {item.tipo}
                   </span>
                 </td>
-                <td className="py-6 font-medium text-gray-700">{item.numero}</td>
-                <td className="py-6 text-gray-700">{item.cliente}</td>
-                <td className="py-6 text-gray-500">{item.vendedor}</td>
-                <td className="py-6 text-right font-bold text-[#2C2420]">{item.total}</td>
+                <td className="py-4 font-medium text-on-surface">{item.numero}</td>
+                <td className="py-4 text-on-surface">{item.cliente}</td>
+                <td className="py-4 text-on-surface-variant">{item.vendedor}</td>
+                <td className="py-4 text-right font-semibold text-primary">{item.total}</td>
               </tr>
             ))}
           </tbody>

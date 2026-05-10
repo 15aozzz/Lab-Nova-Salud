@@ -5,90 +5,87 @@ export default function ComprobanteInfo({ info, setInfo }) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-      <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-6 pb-2 border-b border-gray-50">
+    <div className="bg-surface-container-lowest rounded-lg border border-outline-variant p-card_gap">
+      <h3 className="text-[11px] font-bold tracking-wider text-primary-container pb-3 border-b border-outline-variant mb-card_gap">
         Comprobante de Pago
       </h3>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Empresa */}
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-gray-700">Empresa</label>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-card_gap">
+        <div className="flex flex-col gap-1">
+          <label className="text-[11px] font-bold tracking-wider text-primary-container">Empresa</label>
           <input 
             type="text"
             name="empresa"
             value={info.empresa}
             onChange={handleChange}
-            className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-gray-700 focus:ring-2 focus:ring-[#895202]/20 focus:border-[#895202] transition-all outline-none"
+            className="bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none"
           />
         </div>
 
-        {/* Tipo */}
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-gray-700">Tipo de Comprobante</label>
+        <div className="flex flex-col gap-1">
+          <label className="text-[11px] font-bold tracking-wider text-primary-container">Tipo de Comprobante</label>
           <select 
             name="tipo"
             value={info.tipo}
             onChange={handleChange}
-            className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-gray-700 focus:ring-2 focus:ring-[#895202]/20 focus:border-[#895202] transition-all outline-none"
+            className="bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none"
           >
             <option>Boleta Electrónica</option>
             <option>Factura Electrónica</option>
           </select>
         </div>
 
-        {/* Serie y Correlativo en una fila si es necesario, pero aquí usaremos el grid */}
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-gray-700">Serie</label>
+        <div className="flex flex-col gap-1">
+          <label className="text-[11px] font-bold tracking-wider text-primary-container">Serie</label>
           <input 
             type="text"
             name="serie"
             value={info.serie}
             onChange={handleChange}
-            className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-gray-700 focus:ring-2 focus:ring-[#895202]/20 focus:border-[#895202] outline-none"
+            className="bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none"
           />
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-gray-700">Correlativo</label>
+        <div className="flex flex-col gap-1">
+          <label className="text-[11px] font-bold tracking-wider text-primary-container">Correlativo</label>
           <input 
             type="text"
             name="correlativo"
             value={info.correlativo}
             onChange={handleChange}
-            className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-gray-700 outline-none"
+            className="bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md text-on-surface outline-none"
           />
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-gray-700">Fecha de Emisión</label>
+        <div className="flex flex-col gap-1">
+          <label className="text-[11px] font-bold tracking-wider text-primary-container">Fecha de Emisión</label>
           <input 
             type="text"
             name="fecha"
             value={info.fecha}
             readOnly
-            className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-gray-500 cursor-not-allowed outline-none"
+            className="bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md text-on-surface-variant cursor-not-allowed outline-none"
           />
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-gray-700">Tipo de Operación</label>
-          <select className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-gray-700 outline-none">
+        <div className="flex flex-col gap-1">
+          <label className="text-[11px] font-bold tracking-wider text-primary-container">Tipo de Operación</label>
+          <select className="bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md text-on-surface outline-none">
             <option>Venta Interna</option>
           </select>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-gray-700">Forma de Pago</label>
-          <select className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-gray-700 outline-none">
+        <div className="flex flex-col gap-1">
+          <label className="text-[11px] font-bold tracking-wider text-primary-container">Forma de Pago</label>
+          <select className="bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md text-on-surface outline-none">
             <option>Contado</option>
             <option>Crédito</option>
           </select>
         </div>
 
-        <div className="flex flex-col gap-2 lg:col-span-1">
-          <label className="text-sm font-medium text-gray-700">Moneda</label>
-          <select className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-gray-700 outline-none font-bold">
+        <div className="flex flex-col gap-1 lg:col-span-1">
+          <label className="text-[11px] font-bold tracking-wider text-primary-container">Moneda</label>
+          <select className="bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md text-on-surface outline-none font-bold">
             <option>PEN - SOLES</option>
             <option>USD - DÓLARES</option>
           </select>

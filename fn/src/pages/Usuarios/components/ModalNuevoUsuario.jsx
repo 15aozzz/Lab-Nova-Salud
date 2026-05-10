@@ -9,7 +9,6 @@ export default function ModalNuevoUsuario({ abierto, onClose, onGuardado, emplea
   const [guardando, setGuardando] = useState(false);
   const [error, setError] = useState("");
 
-  // Empleados que no tienen usuario asignado
   const empleadosDisponibles = empleados.filter(e => !e.tiene_usuario);
 
   if (!abierto) return null;
@@ -41,50 +40,48 @@ export default function ModalNuevoUsuario({ abierto, onClose, onGuardado, emplea
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-[#2C2420]/60 backdrop-blur-md" onClick={onClose} />
-      <div className="relative bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+      <div className="absolute inset-0 bg-primary-container/60 backdrop-blur-md" onClick={onClose} />
+      <div className="relative bg-surface-container-lowest w-full max-w-lg rounded-xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
 
-        {/* Header */}
-        <div className="px-8 py-6 border-b border-gray-100 flex items-center justify-between">
+        <div className="px-card_gap py-card_gap border-b border-outline-variant flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-black text-[#2C2420]">Nuevo Usuario</h2>
-            <p className="text-xs text-gray-400 font-medium">Registra un nuevo usuario del sistema</p>
+            <h2 className="text-h2 font-semibold tracking-tight text-primary-container">Nuevo Usuario</h2>
+            <p className="text-body-sm text-on-surface-variant font-medium">Registra un nuevo usuario del sistema</p>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400">
+          <button onClick={onClose} className="p-2 hover:bg-surface-container rounded-full transition-colors text-on-surface-variant">
             <X className="w-6 h-6" />
           </button>
         </div>
 
-        {/* Form */}
-        <div className="p-8 space-y-6">
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Nombre de usuario</label>
+        <div className="p-card_gap space-y-card_gap">
+          <div className="space-y-1">
+            <label className="text-[11px] font-bold tracking-wider text-primary-container ml-0.5">Nombre de usuario</label>
             <input
               name="username"
               value={form.username}
               onChange={handleChange}
               placeholder="Ej. admin, cajero1"
-              className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:ring-4 focus:ring-orange-50 outline-none focus:border-[#895202] transition-all"
+              className="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-all"
             />
           </div>
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Contraseña</label>
+          <div className="space-y-1">
+            <label className="text-[11px] font-bold tracking-wider text-primary-container ml-0.5">Contraseña</label>
             <input
               type="password"
               name="password"
               value={form.password}
               onChange={handleChange}
               placeholder="Contraseña segura"
-              className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:ring-4 focus:ring-orange-50 outline-none focus:border-[#895202] transition-all"
+              className="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-all"
             />
           </div>
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Empleado</label>
+          <div className="space-y-1">
+            <label className="text-[11px] font-bold tracking-wider text-primary-container ml-0.5">Empleado</label>
             <select
               name="id_empleado"
               value={form.id_empleado}
               onChange={handleChange}
-              className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:ring-4 focus:ring-orange-50 outline-none focus:border-[#895202] transition-all"
+              className="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-all"
             >
               <option value="">Seleccione un empleado...</option>
               {empleadosDisponibles.map(e => (
@@ -94,18 +91,17 @@ export default function ModalNuevoUsuario({ abierto, onClose, onGuardado, emplea
               ))}
             </select>
             {empleadosDisponibles.length === 0 && (
-              <p className="text-xs text-amber-600 mt-1">No hay empleados disponibles. Todos los empleados ya tienen usuario.</p>
+              <p className="text-body-sm text-on-surface-variant mt-1">No hay empleados disponibles. Todos los empleados ya tienen usuario.</p>
             )}
           </div>
-          {error && <p className="text-xs text-red-500 font-medium bg-red-50 px-4 py-2 rounded-lg">{error}</p>}
+          {error && <p className="text-body-sm text-error font-medium bg-error-container px-3 py-2 rounded">{error}</p>}
         </div>
 
-        {/* Footer */}
-        <div className="px-8 pb-8 flex gap-4">
-          <button onClick={onClose} className="flex-1 py-3.5 text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors rounded-xl">
+        <div className="px-card_gap pb-card_gap flex gap-card_gap">
+          <button onClick={onClose} className="flex-1 py-[7px] text-body-md font-bold text-on-surface-variant hover:text-on-surface transition-colors rounded-lg">
             Cancelar
           </button>
-          <button onClick={handleGuardar} disabled={guardando || empleadosDisponibles.length === 0} className="flex-[2] bg-[#895202] text-white py-3.5 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 shadow-xl shadow-orange-900/20 hover:bg-[#6d4102] transition-all active:scale-95 disabled:opacity-60">
+          <button onClick={handleGuardar} disabled={guardando || empleadosDisponibles.length === 0} className="flex-[2] bg-secondary text-on-secondary py-[7px] rounded-lg text-body-md font-bold flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-all active:scale-95 disabled:opacity-60">
             <Save className="w-5 h-5" /> {guardando ? "Guardando..." : "Guardar Usuario"}
           </button>
         </div>

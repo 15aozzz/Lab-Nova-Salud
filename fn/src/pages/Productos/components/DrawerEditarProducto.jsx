@@ -102,93 +102,90 @@ export default function DrawerEditarProducto({ abierto, onClose, producto, categ
       <div className="absolute inset-0 bg-black/20 backdrop-blur-sm transition-opacity" onClick={onClose} />
 
       <div className="absolute inset-y-0 right-0 max-w-full flex">
-        <div className="w-screen max-w-md bg-white shadow-2xl animate-in slide-in-from-right duration-300">
+        <div className="w-screen max-w-md bg-surface-container-lowest shadow-2xl animate-in slide-in-from-right duration-300">
           <div className="h-full flex flex-col">
-            {/* Header */}
-            <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+            <div className="p-card_gap border-b border-outline-variant flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-[#2C2420]">Editar Producto</h2>
-                <p className="text-xs text-gray-400 font-medium mt-1">{producto.codigo} — {producto.nombre_comercial}</p>
+                <h2 className="text-h2 font-semibold tracking-tight text-primary-container">Editar Producto</h2>
+                <p className="text-body-sm text-on-surface-variant font-medium mt-1">{producto.codigo} — {producto.nombre_comercial}</p>
               </div>
-              <button onClick={onClose} className="p-2 hover:bg-gray-50 rounded-full transition-colors">
-                <X className="w-6 h-6 text-gray-400" />
+              <button onClick={onClose} className="p-2 hover:bg-surface-container rounded-full transition-colors">
+                <X className="w-6 h-6 text-on-surface-variant" />
               </button>
             </div>
 
-            {/* Formulario */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Nombre Comercial</label>
-                <input type="text" name="nombre_comercial" value={form.nombre_comercial} onChange={handleChange} className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-orange-100 outline-none" />
+            <div className="flex-1 overflow-y-auto p-card_gap space-y-card_gap">
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-bold tracking-wider text-primary-container">Nombre Comercial</label>
+                <input type="text" name="nombre_comercial" value={form.nombre_comercial} onChange={handleChange} className="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary outline-none" />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Principio Activo</label>
-                <input type="text" name="principio_activo" value={form.principio_activo} onChange={handleChange} className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-orange-100 outline-none" />
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-bold tracking-wider text-primary-container">Principio Activo</label>
+                <input type="text" name="principio_activo" value={form.principio_activo} onChange={handleChange} className="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary outline-none" />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Laboratorio</label>
-                  <select name="laboratorio" value={form.laboratorio} onChange={handleChange} className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-orange-100 outline-none cursor-pointer">
+              <div className="grid grid-cols-2 gap-card_gap">
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-bold tracking-wider text-primary-container">Laboratorio</label>
+                  <select name="laboratorio" value={form.laboratorio} onChange={handleChange} className="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary outline-none cursor-pointer">
                     <option value="">Seleccionar...</option>
                     {(laboratorios || []).filter(l => l !== "Todos").map(l => <option key={l}>{l}</option>)}
                   </select>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Categoría</label>
-                  <select name="categoria" value={form.categoria} onChange={handleChange} className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-orange-100 outline-none cursor-pointer">
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-bold tracking-wider text-primary-container">Categoría</label>
+                  <select name="categoria" value={form.categoria} onChange={handleChange} className="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary outline-none cursor-pointer">
                     {(categorias || []).filter(c => c !== "Todas").map(c => <option key={c}>{c}</option>)}
                   </select>
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Presentación</label>
-                <input type="text" name="presentacion" value={form.presentacion} onChange={handleChange} placeholder="Ej. Caja x 100" className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-orange-100 outline-none" />
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-bold tracking-wider text-primary-container">Presentación</label>
+                <input type="text" name="presentacion" value={form.presentacion} onChange={handleChange} placeholder="Ej. Caja x 100" className="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary outline-none" />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Stock Actual</label>
-                  <input type="number" name="stock_actual" value={form.stock_actual} onChange={handleChange} className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-orange-100 outline-none" />
+              <div className="grid grid-cols-2 gap-card_gap">
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-bold tracking-wider text-primary-container">Stock Actual</label>
+                  <input type="number" name="stock_actual" value={form.stock_actual} onChange={handleChange} className="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary outline-none" />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Stock Mínimo</label>
-                  <input type="number" name="stock_minimo" value={form.stock_minimo} onChange={handleChange} className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-orange-100 outline-none" />
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-bold tracking-wider text-primary-container">Stock Mínimo</label>
+                  <input type="number" name="stock_minimo" value={form.stock_minimo} onChange={handleChange} className="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-[7px] text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary outline-none" />
                 </div>
               </div>
 
-              {/* Unidades de Venta */}
-              <div className="space-y-4 pt-4 border-t border-gray-50">
+              <div className="space-y-card_gap pt-card_gap border-t border-outline-variant">
                 <div>
-                  <h3 className="text-xs font-black text-[#895202] uppercase tracking-tighter">Unidades de Venta</h3>
-                  <p className="text-[10px] text-gray-400 font-medium italic">Actualice las presentaciones y precios</p>
+                  <h3 className="text-[11px] font-bold tracking-wider text-secondary">Unidades de Venta</h3>
+                  <p className="text-label-caps text-on-surface-variant font-medium italic">Actualice las presentaciones y precios</p>
                 </div>
                 <div className="grid grid-cols-1 gap-3">
                   {UNIDADES_DISPONIBLES.map((uni) => {
                     const config = unidades[uni.id] || { activo: false, precio: "", factor: uni.factorDefault };
                     return (
-                      <div key={uni.id} className={`flex items-center gap-4 p-4 rounded-2xl border transition-all ${config.activo ? 'bg-orange-50/30 border-orange-100 shadow-sm' : 'bg-gray-50/50 border-gray-100 opacity-60'}`}>
+                      <div key={uni.id} className={`flex items-center gap-4 p-4 rounded-lg border transition-all ${config.activo ? 'bg-secondary-fixed/30 border-secondary-fixed-dim shadow-sm' : 'bg-surface-container/50 border-outline-variant opacity-60'}`}>
                         <label className="relative flex items-center cursor-pointer">
                           <input type="checkbox" checked={config.activo} onChange={() => toggleUnidad(uni.id)} className="sr-only peer" />
-                          <div className="w-6 h-6 bg-white border-2 border-gray-200 rounded-lg peer-checked:bg-[#895202] peer-checked:border-[#895202] transition-all flex items-center justify-center">
-                            <div className="w-2 h-2 bg-white rounded-full scale-0 peer-checked:scale-100 transition-transform" />
+                          <div className="w-5 h-5 bg-surface-container-lowest border-2 border-outline-variant rounded peer-checked:bg-secondary peer-checked:border-secondary transition-all flex items-center justify-center">
+                            <div className="w-2 h-2 bg-surface-container-lowest rounded-full scale-0 peer-checked:scale-100 transition-transform" />
                           </div>
                         </label>
                         <div className="flex-1">
-                          <span className={`text-sm font-bold ${config.activo ? 'text-[#2C2420]' : 'text-gray-400'}`}>{uni.nombre}</span>
+                          <span className={`text-body-md font-bold ${config.activo ? 'text-primary-container' : 'text-on-surface-variant'}`}>{uni.nombre}</span>
                         </div>
                         <div className={`flex items-center gap-3 transition-all duration-300 ${config.activo ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                           <div className="flex flex-col gap-1 w-24">
-                            <label className="text-[9px] font-black text-gray-400 uppercase ml-1">Contenido</label>
-                            <input type="number" value={config.factor} disabled={uni.id === 'UND'} onChange={(e) => handleUpdateUnidad(uni.id, 'factor', e.target.value)} className="w-full bg-white border border-gray-100 rounded-xl px-3 py-2 text-xs font-bold text-gray-600 focus:ring-4 focus:ring-orange-50 outline-none transition-all disabled:bg-gray-50" />
+                            <label className="text-[10px] font-bold text-on-surface-variant uppercase ml-1">Contenido</label>
+                            <input type="number" value={config.factor} disabled={uni.id === 'UND'} onChange={(e) => handleUpdateUnidad(uni.id, 'factor', e.target.value)} className="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-1.5 text-label-caps font-bold text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-all disabled:bg-surface-container" />
                           </div>
                           <div className="flex flex-col gap-1 w-32">
-                            <label className="text-[9px] font-black text-gray-400 uppercase ml-1">Precio Venta</label>
+                            <label className="text-[10px] font-bold text-on-surface-variant uppercase ml-1">Precio Venta</label>
                             <div className="relative">
-                              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#895202] text-[10px] font-black">S/.</span>
-                              <input type="number" placeholder="0.00" value={config.precio} onChange={(e) => handleUpdateUnidad(uni.id, 'precio', e.target.value)} className="w-full bg-white border border-orange-200 rounded-xl pl-8 pr-3 py-2 text-xs font-bold text-[#895202] focus:ring-4 focus:ring-orange-100 outline-none transition-all" />
+                              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-[10px] font-bold">S/.</span>
+                              <input type="number" placeholder="0.00" value={config.precio} onChange={(e) => handleUpdateUnidad(uni.id, 'precio', e.target.value)} className="w-full bg-surface-container-lowest border border-secondary rounded pl-8 pr-3 py-1.5 text-label-caps font-bold text-secondary focus:ring-1 focus:ring-secondary outline-none transition-all" />
                             </div>
                           </div>
                         </div>
@@ -198,15 +195,14 @@ export default function DrawerEditarProducto({ abierto, onClose, producto, categ
                 </div>
               </div>
 
-              {error && <p className="text-xs text-red-500 font-medium bg-red-50 px-4 py-2 rounded-lg">{error}</p>}
+              {error && <p className="text-body-sm text-error font-medium bg-error-container px-3 py-2 rounded">{error}</p>}
             </div>
 
-            {/* Footer */}
-            <div className="p-6 border-t border-gray-100 flex gap-4">
-              <button onClick={onClose} className="flex-1 px-6 py-3 border border-gray-200 rounded-lg text-sm font-bold text-gray-600 hover:bg-gray-50 transition-colors">
+            <div className="p-card_gap border-t border-outline-variant flex gap-card_gap">
+              <button onClick={onClose} className="flex-1 px-4 py-[7px] border border-outline-variant rounded-lg text-body-md font-bold text-on-surface hover:bg-surface-container transition-colors">
                 Cancelar
               </button>
-              <button onClick={handleGuardar} disabled={guardando} className="flex-1 px-6 py-3 bg-[#895202] text-white rounded-lg text-sm font-bold shadow-lg shadow-orange-900/10 hover:bg-[#6d4102] transition-colors flex items-center justify-center gap-2 disabled:opacity-60">
+              <button onClick={handleGuardar} disabled={guardando} className="flex-1 px-4 py-[7px] bg-secondary text-on-secondary rounded-lg text-body-md font-bold shadow-sm hover:opacity-90 transition-colors flex items-center justify-center gap-2 disabled:opacity-60">
                 <Save className="w-4 h-4" /> {guardando ? "Guardando..." : "Guardar Cambios"}
               </button>
             </div>

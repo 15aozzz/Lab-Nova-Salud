@@ -4,13 +4,10 @@ import { useAuth } from '../../context/AuthContext';
 
 const IconoMortero = () => (
   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    {/* Cuerpo del Mortero */}
-    <path d="M4 6H20L18 20C18 21.1046 17.1046 22 16 22H8C6.89543 22 6 21.1046 6 20L4 6Z" fill="#84511A"/>
-    <path d="M3 6C3 4.89543 3.89543 4 5 4H19C20.1046 4 21 4.89543 21 6V6H3V6Z" fill="#84511A"/>
-    {/* Signo Más (Cruz) */}
+    <path d="M4 6H20L18 20C18 21.1046 17.1046 22 16 22H8C6.89543 22 6 21.1046 6 20L4 6Z" fill="#895202"/>
+    <path d="M3 6C3 4.89543 3.89543 4 5 4H19C20.1046 4 21 4.89543 21 6V6H3V6Z" fill="#895202"/>
     <path d="M12 10V18M8 14H16" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    {/* Mano del Mortero (Pestilo) */}
-    <path d="M14 2L18 0" stroke="#84511A" strokeWidth="3" strokeLinecap="round"/>
+    <path d="M14 2L18 0" stroke="#895202" strokeWidth="3" strokeLinecap="round"/>
   </svg>
 );
 
@@ -34,37 +31,35 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#282422]">
-      <div className="bg-white rounded-[12px] p-10 w-[420px] flex flex-col items-center shadow-2xl mx-4">
-        {/* Logo y Título */}
+    <div className="min-h-screen flex items-center justify-center bg-primary-container">
+      <div className="bg-surface-container-lowest rounded-xl p-10 w-[420px] flex flex-col items-center shadow-2xl mx-4">
         <div className="mb-8 flex flex-col items-center">
           <IconoMortero />
-          <h1 className="text-[#3A3330] text-[22px] font-bold mt-3 font-sans tracking-tight">Nova Salud</h1>
-          <p className="text-[#9C948A] text-[13px] mt-0.5">Botica - Sistema de Ventas</p>
+          <h1 className="text-primary-container text-h1 font-bold tracking-tight mt-3">Nova Salud</h1>
+          <p className="text-on-surface-variant text-body-sm mt-0.5">Botica - Sistema de Ventas</p>
         </div>
 
-        {/* Formulario */}
         <form onSubmit={manejarEnvio} className="w-full flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
-            <label className="text-[#5D544E] text-[13px] font-medium ml-0.5">Usuario</label>
+            <label className="text-on-surface-variant text-[11px] font-bold tracking-wider ml-0.5">Usuario</label>
             <input 
               type="text" 
               value={usuario}
               onChange={(e) => setUsuario(e.target.value)}
               placeholder="Ingrese su usuario" 
-              className="border border-[#E4DDD6] bg-[#FCFAF8] text-[#3A3330] px-3.5 py-2.5 rounded-md outline-none focus:border-[#84511A] focus:ring-1 focus:ring-[#84511A] transition-colors text-[14px] placeholder-[#B5B0AA]"
+              className="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-[9px] text-body-md text-on-surface outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors placeholder-[#B5B0AA]"
               required
             />
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-[#5D544E] text-[13px] font-medium ml-0.5">Contraseña</label>
+            <label className="text-on-surface-variant text-[11px] font-bold tracking-wider ml-0.5">Contraseña</label>
             <input 
               type="password" 
               value={clave}
               onChange={(e) => setClave(e.target.value)}
               placeholder="Ingrese su contraseña" 
-              className="border border-[#E4DDD6] bg-[#FCFAF8] text-[#3A3330] px-3.5 py-2.5 rounded-md outline-none focus:border-[#84511A] focus:ring-1 focus:ring-[#84511A] transition-colors text-[14px] placeholder-[#B5B0AA]"
+              className="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-[9px] text-body-md text-on-surface outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors placeholder-[#B5B0AA]"
               required
             />
           </div>
@@ -72,17 +67,17 @@ export default function LoginPage() {
           <div className="mt-4">
             <button 
               type="submit" 
-              className="w-full bg-[#8C5D23] hover:bg-[#784f1d] text-white font-medium py-2.5 rounded-md transition-colors text-[14px] shadow-sm"
+              className="w-full bg-secondary text-on-secondary font-bold py-[9px] rounded-lg text-body-md hover:opacity-90 transition-opacity shadow-sm"
             >
               Iniciar Sesión
             </button>
             {error && (
-              <p className="text-[#D32F2F] text-xs mt-3 text-center">{error}</p>
+              <p className="text-error text-body-sm mt-3 text-center">{error}</p>
             )}
           </div>
         </form>
 
-        <p className="text-[#A39C93] text-[11px] mt-10 tracking-wide">
+        <p className="text-on-surface-variant text-label-caps mt-10 tracking-wide">
           Botica Nova Salud &copy; 2026
         </p>
       </div>

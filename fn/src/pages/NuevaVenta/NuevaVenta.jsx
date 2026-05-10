@@ -4,7 +4,6 @@ import ComprobanteInfo from "./components/ComprobanteInfo";
 import DatosCliente from "./components/DatosCliente";
 import TablaProductos from "./components/TablaProductos";
 import ResumenVenta from "./components/ResumenVenta";
-import { useEffect } from "react";
 
 export default function NuevaVenta() {
   const { 
@@ -21,27 +20,16 @@ export default function NuevaVenta() {
     procesarVenta
   } = useVentaState();
 
-  // El useEffect ahora está vacío, usa el buscador para agregar productos
-  //useEffect(() => {
-    // Aquí podrías cargar datos iniciales si fuera necesario en el futuro
-  //}, []);
-
-
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      {/* Cabecera */}
+    <div className="space-y-card_gap animate-in fade-in slide-in-from-bottom-4 duration-500 pb-12">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <nav className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">
-            Inicio / Ventas / <span className="text-[#a16207]">Boleta</span>
-          </nav>
-          <h1 className="text-3xl font-bold text-[#2C2420]">Nueva Venta</h1>
+          <h2 className="text-[28px] font-semibold tracking-tight text-primary-container mb-1">Nueva Venta</h2>
         </div>
         <TipoVentaSelector />
       </div>
 
-      {/* Grid Principal: Info y Cliente */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-card_gap items-stretch">
         <div className="lg:col-span-8">
           <ComprobanteInfo info={comprobante} setInfo={setComprobante} />
         </div>
@@ -50,8 +38,7 @@ export default function NuevaVenta() {
         </div>
       </div>
 
-      {/* Grid Secundario: Productos y Resumen */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-card_gap items-start">
         <div className="lg:col-span-8 flex flex-col h-full">
           <TablaProductos 
             productos={productos} 
@@ -68,4 +55,3 @@ export default function NuevaVenta() {
     </div>
   );
 }
-

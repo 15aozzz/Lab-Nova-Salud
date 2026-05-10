@@ -33,14 +33,12 @@ export default function Productos() {
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500 pb-12">
-      {/* Cabecera */}
+    <div className="space-y-card_gap animate-in fade-in duration-500 pb-12">
       <div>
-        <h1 className="text-3xl font-bold text-[#2C2420]">Inventario de Productos</h1>
-        <p className="text-gray-500 mt-1">Controla el stock, vencimientos y precios de tus medicinas.</p>
+        <h2 className="text-[28px] font-semibold tracking-tight text-primary-container mb-1">Inventario de Productos</h2>
+        <p className="text-body-md text-on-surface-variant">Controla el stock, vencimientos y precios de tus medicinas.</p>
       </div>
 
-      {/* Filtros y Acción */}
       <FiltrosProductos 
         filtros={filtros} 
         setFiltros={setFiltros} 
@@ -49,11 +47,10 @@ export default function Productos() {
         onNuevoProducto={() => setModalNuevoAbierto(true)}
       />
 
-      {/* Tabla Principal */}
-      <div className="space-y-6">
+      <div className="space-y-card_gap">
         {cargando ? (
           <div className="flex justify-center items-center h-64">
-            <Loader2 className="w-8 h-8 animate-spin text-[#a16207]" />
+            <Loader2 className="w-8 h-8 animate-spin text-secondary" />
           </div>
         ) : (
           <TablaProductos 
@@ -70,7 +67,6 @@ export default function Productos() {
         />
       </div>
 
-      {/* Panel Lateral de Edición */}
       <DrawerEditarProducto 
         abierto={drawerAbierto}
         onClose={() => setDrawerAbierto(false)}
@@ -80,7 +76,6 @@ export default function Productos() {
         onGuardado={recargar}
       />
 
-      {/* Modal Centrado de Creación */}
       <ModalNuevoProducto 
         abierto={modalNuevoAbierto}
         onClose={() => setModalNuevoAbierto(false)}
@@ -91,4 +86,3 @@ export default function Productos() {
     </div>
   );
 }
-
