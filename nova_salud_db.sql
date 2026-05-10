@@ -558,6 +558,28 @@ END$$
 DELIMITER ;
 
 
+-- -----------------------------------------------------
+-- SP 10: Obtener todos los empleados (con cargo)
+-- Endpoint: GET /api/usuarios/empleados
+-- -----------------------------------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_get_empleados()
+BEGIN
+    SELECT 
+        e.id_empleado,
+        e.dni,
+        e.nombres,
+        e.apellidos,
+        c.nombre_cargo,
+        CASE WHEN u.id_usuario IS NOT NULL THEN TRUE ELSE FALSE END AS tiene_usuario
+    FROM Empleados e
+    INNER JOIN Cargos c ON c.id_cargo = e.id_cargo
+    LEFT JOIN Usuarios u ON u.id_empleado = e.id_empleado
+    ORDER BY e.nombres, e.apellidos;
+END$$
+DELIMITER ;
+
+
 -- ======================================================
 -- RESUMEN DE SPs Y ENDPOINTS DEL BACKEND
 -- ======================================================

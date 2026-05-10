@@ -16,6 +16,7 @@ const clientesRoutes = require('./routes/clientes.routes');
 const productosRoutes = require('./routes/productos.routes');
 const ventasRoutes = require('./routes/ventas.routes');
 const dashboardRoutes = require('./routes/dashboard.routes');
+const usuariosRoutes = require('./routes/usuarios.routes');
 
 // Montar rutas
 app.use('/api/auth', authRoutes);
@@ -24,6 +25,7 @@ app.use('/api/clientes', clientesRoutes);
 app.use('/api/productos', productosRoutes);
 app.use('/api/ventas', ventasRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/usuarios', usuariosRoutes);
 
 // Ruta de prueba
 app.get('/api/health', (req, res) => {
