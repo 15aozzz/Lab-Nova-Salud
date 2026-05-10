@@ -2,27 +2,27 @@ import { Eye } from "lucide-react";
 
 export default function FilaComprobante({ item }) {
   return (
-    <tr className="text-sm hover:bg-gray-50/50 transition-colors">
-      <td className="px-6 py-4 text-gray-500">{item.fecha}</td>
-      <td className="px-6 py-4">
-        <span className={`inline-flex items-center px-3 py-1 rounded text-[10px] font-bold ${
+    <tr className="hover:bg-surface-container-low transition-colors group cursor-pointer">
+      <td className="p-4 whitespace-nowrap text-on-surface-variant">{item.fecha}</td>
+      <td className="p-4">
+        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold ${
           item.tipo === 'BOLETA' 
-            ? 'bg-orange-50 text-orange-700' 
-            : 'bg-gray-100 text-gray-700'
+            ? 'bg-secondary-fixed text-on-secondary-fixed' 
+            : 'bg-primary-fixed text-on-primary-fixed'
         }`}>
           {item.tipo}
         </span>
       </td>
-      <td className="px-6 py-4 text-center font-medium text-gray-500">{item.serie}</td>
-      <td className="px-6 py-4 text-center font-medium text-gray-700">{item.numero}</td>
-      <td className="px-6 py-4 font-medium text-gray-700">{item.cliente}</td>
-      <td className="px-6 py-4 text-gray-500">{item.vendedor}</td>
-      <td className="px-6 py-4 text-right font-bold text-[#2C2420]">
+      <td className="p-4 font-medium">{item.serie}</td>
+      <td className="p-4 text-on-surface-variant">{item.numero}</td>
+      <td className="p-4 truncate max-w-[150px]">{item.cliente}</td>
+      <td className="p-4 text-on-surface-variant">{item.vendedor}</td>
+      <td className="p-4 text-right text-price-display font-semibold text-primary">
         S/. {item.total.toFixed(2)}
       </td>
-      <td className="px-6 py-4 text-center">
-        <button className="p-2 text-gray-400 hover:text-[#895202] transition-colors">
-          <Eye className="w-5 h-5" />
+      <td className="p-4 text-center">
+        <button className="text-on-surface-variant group-hover:text-secondary transition-colors p-1 rounded hover:bg-surface-container">
+          <Eye className="w-[20px] h-[20px]" />
         </button>
       </td>
     </tr>

@@ -19,24 +19,22 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-64 bg-[#2C2420] text-white h-screen flex flex-col shadow-xl">
-      {/* Header */}
-      <div className="p-6 mb-4">
-        <h1 className="text-2xl font-bold tracking-tight">Nova Salud</h1>
-        <p className="text-xs text-orange-200/60 font-medium uppercase tracking-wider">Sistema de ventas</p>
+    <aside className="w-sidebar_width bg-primary-container text-surface-container-lowest h-screen flex flex-col border-r border-outline-variant">
+      <div className="px-4 py-6 mb-4">
+        <h1 className="text-body-lg font-semibold text-surface-container-lowest">Nova Salud</h1>
+        <p className="text-on-primary-container text-body-sm mt-1">Sistema de ventas</p>
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 px-4 space-y-1">
+      <nav className="flex-1 flex flex-col gap-1">
         {menuItems.map((item) => (
           <NavLink
             key={item.path}
             to={item.path}
             className={({ isActive }) =>
-              `block px-5 py-3 rounded-xl transition-all duration-200 font-medium ${
+              `block transition-all ${
                 isActive
-                  ? "bg-[#895202] text-white shadow-lg shadow-orange-900/20"
-                  : "text-gray-400 hover:bg-white/5 hover:text-white"
+                  ? "bg-secondary text-surface-container-lowest font-medium rounded-lg mx-2 my-1 px-4 py-2"
+                  : "text-on-tertiary-container px-4 py-2 hover:text-surface-bright hover:bg-tertiary-container"
               }`
             }
           >
@@ -45,11 +43,10 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {/* Footer */}
-      <div className="p-4 border-t border-white/5">
+      <div className="mt-auto px-2">
         <button
           onClick={handleLogout}
-          className="w-full px-5 py-3 text-left text-gray-400 hover:text-red-400 hover:bg-red-400/5 rounded-xl transition-all duration-200 font-medium"
+          className="w-full text-left text-on-tertiary-container px-4 py-2 hover:text-surface-bright hover:bg-tertiary-container transition-all rounded-lg"
         >
           Cerrar Sesión
         </button>

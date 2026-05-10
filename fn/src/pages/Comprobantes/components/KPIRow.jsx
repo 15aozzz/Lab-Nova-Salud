@@ -6,21 +6,18 @@ export default function KPIRow({ kpis }) {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-card_gap">
       {cards.map((card, index) => (
         <div 
           key={index} 
-          className="relative overflow-hidden bg-white p-8 rounded-xl border border-gray-100 shadow-sm"
+          className="bg-surface-container-lowest rounded-lg p-4 border border-outline-variant flex flex-col gap-1 relative overflow-hidden"
         >
-          {/* Efecto de degradado sutil en la esquina */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-orange-100/30 to-transparent rounded-bl-full -mr-8 -mt-8" />
-          
-          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 relative z-10">
+          <span className="text-[11px] font-bold tracking-wider text-on-surface-variant uppercase">
             {card.title}
-          </p>
-          <h3 className="text-2xl font-bold text-[#2C2420] relative z-10">
+          </span>
+          <span className="text-[20px] font-semibold text-primary-container">
             {card.value}
-          </h3>
+          </span>
         </div>
       ))}
     </div>
