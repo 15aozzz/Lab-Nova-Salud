@@ -1,7 +1,11 @@
-import { useState, useMemo } from "react";
-import { comprobantesMock } from "../../../mocks/comprobantes";
+import { useState, useMemo, useEffect, useCallback } from "react";
+import { comprobantesService } from "../../../services/api";
 
 export function useComprobantes() {
+  const [comprobantesData, setComprobantesData] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState(null);
+
   const [filtros, setFiltros] = useState({
     fechaInicio: "",
     fechaFin: "",
@@ -12,52 +16,52 @@ export function useComprobantes() {
   const [pagina, setPagina] = useState(1);
   const itemsPorPagina = 20;
 
-  // Función para convertir "24 Oct 2023, 14:30" a objeto Date
+  const fetchComprobantes = useCallback(async () => {
+    setCargando(true);
+    setError(null);
+    try {
+      const filtrosBackend = {
+        fecha_inicio: filtros.fechaInicio || undefined,
+        fecha_fin: filtros.fechaFin || undefined,
+        tipo: filtros.tipo !== "TODOS" ? filtros.tipo : undefined,
+        busqueda: filtros.busqueda || undefined
+      };
+      const response = await comprobantesService.getAll(filtrosBackend);
+      setComprobantesData(response.data);
+    } catch (err) {
+      console.error("Error cargando comprobantes:", err);
+      setError(err.message);
+    } finally {
+      setCargando(false);
+    }
+  }, [filtros.fechaInicio, filtros.fechaFin, filtros.tipo, filtros.busqueda]);
+
+  useEffect(() => {
+    fetchComprobantes();
+  }, [fetchComprobantes]);
+
   const parseFecha = (fechaStr) => {
-    const meses = {
-      "Jan": 0, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 5,
-      "Jul": 6, "Aug": 7, "Sep": 8, "Oct": 9, "Nov": 10, "Dec": 11
-    };
-    const partes = fechaStr.split(" ");
-    const dia = parseInt(partes[0]);
-    const mes = meses[partes[1]];
-    const anio = parseInt(partes[2].replace(",", ""));
-    return new Date(anio, mes, dia);
+    const fecha = new Date(fechaStr);
+    const opciones = { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+    return fecha.toLocaleDateString('es-PE', opciones);
   };
 
-  // Filtrado de datos
-  const datosFiltrados = useMemo(() => {
-    return comprobantesMock.filter(c => {
-      // Búsqueda por texto (SIEMPRE REACTIVA)
-      const matchBusqueda = 
-        c.numero.toLowerCase().includes(filtros.busqueda.toLowerCase()) ||
-        c.cliente.toLowerCase().includes(filtros.busqueda.toLowerCase());
+  const datosFormateados = useMemo(() => {
+    return comprobantesData.map(c => ({
+      id: c.id_venta,
+      fecha: parseFecha(c.fecha_hora),
+      tipo: c.tipo_documento,
+      serie: c.serie,
+      numero: c.numero_documento,
+      cliente: c.cliente,
+      vendedor: c.vendedor,
+      total: parseFloat(c.total)
+    }));
+  }, [comprobantesData]);
 
-      // Filtros de Botón (Tipo y Fechas)
-      const matchTipo = filtros.tipo === "TODOS" || c.tipo === filtros.tipo;
-      
-      let matchFecha = true;
-      if (filtros.fechaInicio || filtros.fechaFin) {
-        const fechaComprobante = parseFecha(c.fecha);
-        
-        if (filtros.fechaInicio) {
-          const inicio = new Date(filtros.fechaInicio + "T00:00:00");
-          if (fechaComprobante < inicio) matchFecha = false;
-        }
-        if (filtros.fechaFin) {
-          const fin = new Date(filtros.fechaFin + "T23:59:59");
-          if (fechaComprobante > fin) matchFecha = false;
-        }
-      }
-
-      return matchBusqueda && matchTipo && matchFecha;
-    });
-  }, [filtros]);
-
-  // Cálculos de KPI (Sobre todos los datos filtrados, no solo la página actual)
   const kpis = useMemo(() => {
-    const totalRecaudado = datosFiltrados.reduce((acc, item) => acc + item.total, 0);
-    const nVentas = datosFiltrados.length;
+    const totalRecaudado = datosFormateados.reduce((acc, item) => acc + item.total, 0);
+    const nVentas = datosFormateados.length;
     const ticketPromedio = nVentas > 0 ? totalRecaudado / nVentas : 0;
 
     return {
@@ -65,14 +69,17 @@ export function useComprobantes() {
       nVentas,
       ticketPromedio: ticketPromedio.toLocaleString('es-PE', { minimumFractionDigits: 2 })
     };
-  }, [datosFiltrados]);
+  }, [datosFormateados]);
 
-  // Paginación
-  const totalResultados = datosFiltrados.length;
+  const totalResultados = datosFormateados.length;
   const datosPaginados = useMemo(() => {
     const inicio = (pagina - 1) * itemsPorPagina;
-    return datosFiltrados.slice(inicio, inicio + itemsPorPagina);
-  }, [datosFiltrados, pagina]);
+    return datosFormateados.slice(inicio, inicio + itemsPorPagina);
+  }, [datosFormateados, pagina]);
+
+  useEffect(() => {
+    setPagina(1);
+  }, [filtros]);
 
   return {
     filtros,
@@ -82,6 +89,9 @@ export function useComprobantes() {
     kpis,
     totalResultados,
     comprobantes: datosPaginados,
-    itemsPorPagina
+    itemsPorPagina,
+    cargando,
+    error,
+    recargar: fetchComprobantes
   };
 }

@@ -6,6 +6,15 @@ export const authService = {
 };
 
 export const comprobantesService = {
+  getAll: (filtros = {}) => {
+    const params = new URLSearchParams();
+    if (filtros.fecha_inicio) params.append('fecha_inicio', filtros.fecha_inicio);
+    if (filtros.fecha_fin) params.append('fecha_fin', filtros.fecha_fin);
+    if (filtros.tipo && filtros.tipo !== 'TODOS') params.append('tipo', filtros.tipo);
+    if (filtros.busqueda) params.append('busqueda', filtros.busqueda);
+    const query = params.toString();
+    return client.get(`/comprobantes${query ? '?' + query : ''}`);
+  },
   getTipos: () => client.get('/comprobantes/tipos'),
   getSerie: (id) => client.get(`/comprobantes/serie/${id}`)
 };

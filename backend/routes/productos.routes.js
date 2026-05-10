@@ -8,9 +8,8 @@ router.get('/', async (req, res) => {
         const [result] = await db.query('CALL sp_get_todos_productos()');
         const rows = result[0];
 
-        // Agrupar por id_producto (ya que un producto puede tener múltiples precios)
         const productosAgrupados = rows.reduce((acc, current) => {
-            const { id_producto_precio, unidad, abreviatura, precio_venta, factor, ...prodInfo } = current;
+            const { id_producto_precio, nombre_unidad, cantidad_equivalente, precio_venta, ...prodInfo } = current;
             
             let producto = acc.find(p => p.id_producto === prodInfo.id_producto);
             
@@ -25,10 +24,11 @@ router.get('/', async (req, res) => {
             if (id_producto_precio) {
                 producto.precios.push({
                     id_producto_precio,
-                    unidad,
-                    abreviatura,
+                    unidad: nombre_unidad,
+                    nombre_unidad,
+                    cantidad_equivalente,
                     precio_venta,
-                    factor
+                    factor: cantidad_equivalente
                 });
             }
             
@@ -140,17 +140,22 @@ router.post('/', async (req, res) => {
 // PUT /api/productos/:id
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
-    const { nombre_comercial, stock_actual, stock_minimo, categoria } = req.body;
+    const { nombre_comercial, principio_activo, laboratorio, categoria, presentacion, stock_actual, stock_minimo, precios } = req.body;
 
     if (!nombre_comercial || !categoria) {
         return res.status(400).json({ error: 'Faltan campos obligatorios' });
     }
 
     try {
-        await db.query('CALL sp_actualizar_producto(?, ?, ?, ?, ?)', [
-            id, nombre_comercial, stock_actual || 0, stock_minimo || 0, categoria
-        ]);
-        res.json({ message: 'Producto actualizado exitosamente' });
+        const preciosJson = precios ? JSON.stringify(precios) : '[]';
+        const [result] = await db.query(
+            'CALL sp_actualizar_producto_completo(?, ?, ?, ?, ?, ?, ?, ?, ?, @mensaje)',
+            [id, nombre_comercial, principio_activo || '', laboratorio || '', 
+             categoria, presentacion || '', stock_actual || 0, stock_minimo || 0, preciosJson]
+        );
+        
+        const [[{ mensaje }]] = await db.query('SELECT @mensaje AS mensaje');
+        res.json({ message: mensaje || 'Producto actualizado exitosamente' });
     } catch (error) {
         console.error('Error actualizando producto:', error);
         res.status(500).json({ error: error.message });

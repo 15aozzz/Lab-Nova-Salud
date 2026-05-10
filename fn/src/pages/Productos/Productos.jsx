@@ -76,6 +76,7 @@ export default function Productos() {
         onClose={() => setDrawerAbierto(false)}
         producto={productoSeleccionado}
         categorias={categoriasUnicas}
+        laboratorios={laboratoriosUnicos}
         onGuardado={recargar}
       />
 

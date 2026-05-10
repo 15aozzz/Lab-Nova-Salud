@@ -2,7 +2,20 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-// GET /api/comprobantes/tipos
+router.get('/', async (req, res) => {
+    const { fecha_inicio, fecha_fin, tipo, busqueda } = req.query;
+    try {
+        const [rows] = await db.query(
+            'CALL sp_listar_comprobantes(?, ?, ?, ?)',
+            [fecha_inicio || null, fecha_fin || null, tipo || '', busqueda || '']
+        );
+        res.json(rows[0]);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 router.get('/tipos', async (req, res) => {
     try {
         const [rows] = await db.query('CALL sp_get_tipos_comprobante()');
