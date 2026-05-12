@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { ventasService } from "../../../services/api";
+import { ventasService } from "@/services/api";
 
 export function useVentaState() {
   // Estado para los productos seleccionados
@@ -7,7 +7,6 @@ export function useVentaState() {
 
   // Estado para el cliente
   const [cliente, setCliente] = useState({
-    tipoDoc: "DNI",
     numero: "",
     nombre: "Cliente Genérico",
     direccion: "",
@@ -120,7 +119,14 @@ export function useVentaState() {
         return;
       }
 
-      const idTipoComprobante = Number(comprobante.tipo.includes("Factura") ? 2 : 1);
+      const esFactura = comprobante.tipo.includes("Factura");
+      const docEsperado = esFactura ? 11 : 8;
+      if (cliente.numero && cliente.numero.length !== docEsperado) {
+        alert(`El número de documento debe tener ${docEsperado} dígitos para ${esFactura ? 'Factura' : 'Boleta'}.`);
+        return;
+      }
+
+      const idTipoComprobante = Number(esFactura ? 2 : 1);
       
       const payload = {
         id_tipo_comprobante: idTipoComprobante,
@@ -143,7 +149,7 @@ export function useVentaState() {
       alert(`Venta registrada exitosamente. Documento: ${response.data.serie}-${response.data.numero_documento}`);
       
       setProductos([]);
-      setCliente({ tipoDoc: "DNI", numero: "", nombre: "Cliente Genérico", direccion: "", telefono: "" });
+      setCliente({ numero: "", nombre: "Cliente Genérico", direccion: "", telefono: "" });
       
     } catch (error) {
       console.error("Error al registrar venta:", error.response?.data || error.message);

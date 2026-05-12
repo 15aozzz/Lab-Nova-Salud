@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { Download } from "lucide-react";
 import { useComprobantes } from "./hooks/useComprobantes";
+import { ventasService } from "@/services/api";
 import KPIRow from "./components/KPIRow";
 import FiltrosBusqueda from "./components/FiltrosBusqueda";
 import TablaComprobantes from "./components/TablaComprobantes";
+import DrawerDetalleComprobante from "./components/DrawerDetalleComprobante";
+import Paginador from "@/components/Paginador/Paginador";
 
 export default function Comprobantes() {
   const { 
@@ -16,6 +20,23 @@ export default function Comprobantes() {
     itemsPorPagina,
     recargar
   } = useComprobantes();
+
+  const [detalleAbierto, setDetalleAbierto] = useState(false);
+  const [ventaDetalle, setVentaDetalle] = useState(null);
+  const [cargandoDetalle, setCargandoDetalle] = useState(false);
+
+  const handleVerDetalle = async (id) => {
+    setCargandoDetalle(true);
+    try {
+      const res = await ventasService.getVenta(id);
+      setVentaDetalle(res.data);
+      setDetalleAbierto(true);
+    } catch (err) {
+      console.error("Error cargando detalle:", err);
+    } finally {
+      setCargandoDetalle(false);
+    }
+  };
 
   return (
     <div className="space-y-card_gap animate-in fade-in duration-500 pb-12">
@@ -34,12 +55,24 @@ export default function Comprobantes() {
 
       <FiltrosBusqueda filtros={filtros} setFiltros={setFiltros} onFiltrar={recargar} />
 
-      <TablaComprobantes 
+      <TablaComprobantes
         comprobantes={comprobantes}
-        pagina={pagina}
+        onVerDetalle={handleVerDetalle}
+      />
+
+      <Paginador
+        actual={pagina}
         totalResultados={totalResultados}
         itemsPorPagina={itemsPorPagina}
         onCambioPagina={setPagina}
+        etiqueta="comprobantes"
+      />
+
+      <DrawerDetalleComprobante
+        abierto={detalleAbierto}
+        onClose={() => setDetalleAbierto(false)}
+        data={ventaDetalle}
+        cargando={cargandoDetalle}
       />
     </div>
   );

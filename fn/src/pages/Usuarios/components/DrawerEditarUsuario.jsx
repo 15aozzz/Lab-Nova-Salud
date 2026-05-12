@@ -1,6 +1,6 @@
 import { X, Save } from "lucide-react";
 import { useState, useEffect } from "react";
-import { usuariosService } from "../../../services/api";
+import { usuariosService } from "@/services/api";
 
 export default function DrawerEditarUsuario({ abierto, onClose, usuario, onGuardado, empleados }) {
   const [form, setForm] = useState({ username: "", password: "", id_empleado: "" });

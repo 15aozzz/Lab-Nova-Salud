@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
-import { comprobantesService } from "../../../services/api";
+import { comprobantesService } from "@/services/api";
 
 export function useComprobantes() {
   const [comprobantesData, setComprobantesData] = useState([]);

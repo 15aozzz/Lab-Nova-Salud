@@ -1,6 +1,6 @@
 import { X, Save } from "lucide-react";
 import { useState } from "react";
-import { productosService } from "../../../services/api";
+import { productosService } from "@/services/api";
 
 const Campo = ({ label, children }) => (
   <div className="space-y-1">

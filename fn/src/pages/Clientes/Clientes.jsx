@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Search, Loader2, UserPlus, Download } from "lucide-react";
 import { useClientes } from "./hooks/useClientes";
+import { useAuth } from "@/context/AuthContext";
 import TablaClientes from "./components/TablaClientes";
-import ModalNuevoCliente from "./components/ModalNuevoCliente";
-import DrawerEditarCliente from "./components/DrawerEditarCliente";
-import PaginadorClientes from "./components/PaginadorClientes";
+import ClienteForm from "./components/ClienteForm";
+import Paginador from "@/components/Paginador/Paginador";
 
 export default function Clientes() {
+  const { isAdmin } = useAuth();
   const {
     clientes,
     totalResultados,
@@ -20,13 +21,22 @@ export default function Clientes() {
     recargar,
   } = useClientes();
 
-  const [modalNuevoAbierto, setModalNuevoAbierto] = useState(false);
-  const [drawerAbierto, setDrawerAbierto] = useState(false);
+  const [formAbierto, setFormAbierto] = useState(false);
   const [clienteSeleccionado, setClienteSeleccionado] = useState(null);
+
+  const handleNuevo = () => {
+    setClienteSeleccionado(null);
+    setFormAbierto(true);
+  };
 
   const handleEditar = (cliente) => {
     setClienteSeleccionado(cliente);
-    setDrawerAbierto(true);
+    setFormAbierto(true);
+  };
+
+  const handleCerrarForm = () => {
+    setFormAbierto(false);
+    setClienteSeleccionado(null);
   };
 
   return (
@@ -36,13 +46,15 @@ export default function Clientes() {
           <h2 className="text-[28px] font-semibold tracking-tight text-primary-container mb-1">Directorio de Clientes</h2>
           <p className="text-body-md text-on-surface-variant">Gestiona la base de datos de clientes y empresas para facturación.</p>
         </div>
-        <button
-          onClick={() => setModalNuevoAbierto(true)}
-          className="flex items-center gap-2 bg-secondary text-on-secondary px-4 py-[7px] rounded-lg text-body-md font-bold shadow-sm hover:opacity-90 transition-all active:scale-95"
-        >
-          <UserPlus className="w-[18px] h-[18px]" />
-          + Nuevo Cliente
-        </button>
+        {isAdmin && (
+          <button
+            onClick={handleNuevo}
+            className="flex items-center gap-2 bg-secondary text-on-secondary px-4 py-[7px] rounded-lg text-body-md font-bold shadow-sm hover:opacity-90 transition-all active:scale-95"
+          >
+            <UserPlus className="w-[18px] h-[18px]" />
+            + Nuevo Cliente
+          </button>
+        )}
       </div>
 
       <div className="flex items-center gap-3">
@@ -77,27 +89,24 @@ export default function Clientes() {
       ) : (
         <div className="space-y-card_gap">
           <TablaClientes clientes={clientes} onEditar={handleEditar} />
-          <PaginadorClientes
+          <Paginador
             actual={pagina}
             totalResultados={totalResultados}
             itemsPorPagina={itemsPorPagina}
             onCambioPagina={setPagina}
+            etiqueta="clientes"
           />
         </div>
       )}
 
-      <ModalNuevoCliente
-        abierto={modalNuevoAbierto}
-        onClose={() => setModalNuevoAbierto(false)}
-        onGuardado={recargar}
-      />
-
-      <DrawerEditarCliente
-        abierto={drawerAbierto}
-        onClose={() => setDrawerAbierto(false)}
-        cliente={clienteSeleccionado}
-        onGuardado={recargar}
-      />
+      {isAdmin && (
+        <ClienteForm
+          abierto={formAbierto}
+          cliente={clienteSeleccionado}
+          onClose={handleCerrarForm}
+          onGuardado={recargar}
+        />
+      )}
     </div>
   );
 }

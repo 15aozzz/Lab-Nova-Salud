@@ -1,6 +1,6 @@
 import { X, Save } from "lucide-react";
 import { useState, useEffect } from "react";
-import { productosService } from "../../../services/api";
+import { productosService } from "@/services/api";
 
 const UNIDADES_DISPONIBLES = [
   { id: "UND", nombre: "Unidad", dbNames: ["Unidad"], factorDefault: "1" },

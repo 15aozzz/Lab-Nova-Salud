@@ -1,4 +1,5 @@
 import { Edit3, Pin } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 const TIPO_BADGE = (doc) => {
   if (!doc) return { label: "OTROS", color: "bg-surface-container text-on-surface-variant" };
@@ -9,38 +10,47 @@ const TIPO_BADGE = (doc) => {
 };
 
 export default function TablaClientes({ clientes, onEditar }) {
+  const { isAdmin } = useAuth();
+  const columnas = isAdmin ? 4 : 3;
   if (!clientes.length) {
     return (
-      <div className="bg-surface-container-lowest rounded-lg border border-outline-variant">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-outline-variant">
-              <th className="py-3 px-4 text-left text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">N° Documento</th>
-              <th className="py-3 px-4 text-left text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Tipo</th>
-              <th className="py-3 px-4 text-left text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Nombre / Razón Social</th>
-              <th className="py-3 px-4 text-right text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Acciones</th>
-            </tr>
-          </thead>
-        </table>
-        <div className="py-20 text-center">
-          <p className="text-body-md text-on-surface-variant italic">No se encontraron clientes con la búsqueda actual.</p>
+      <div className="bg-surface-container-lowest rounded-lg border border-outline-variant shadow-[0_4px_12px_rgba(22,15,12,0.02)] overflow-hidden flex flex-col">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-surface-container border-b border-outline-variant">
+                <th className="text-[10px] font-bold tracking-wider text-on-surface-variant py-3 px-4 uppercase">N° Documento</th>
+                <th className="text-[10px] font-bold tracking-wider text-on-surface-variant py-3 px-4 uppercase">Tipo</th>
+                <th className="text-[10px] font-bold tracking-wider text-on-surface-variant py-3 px-4 uppercase">Nombre / Razón Social</th>
+                {isAdmin && <th className="text-[10px] font-bold tracking-wider text-on-surface-variant py-3 px-4 uppercase text-right">Acciones</th>}
+              </tr>
+            </thead>
+            <tbody className="text-body-sm text-on-surface divide-y divide-surface-container">
+              <tr>
+                <td colSpan={columnas} className="py-12 text-center text-outline italic text-body-sm">
+                  No se encontraron clientes con la búsqueda actual.
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-surface-container-lowest rounded-lg border border-outline-variant overflow-hidden">
-      <table className="w-full">
-        <thead>
-          <tr className="border-b border-outline-variant">
-            <th className="py-3 px-4 text-left text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">N° Documento</th>
-            <th className="py-3 px-4 text-left text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Tipo</th>
-            <th className="py-3 px-4 text-left text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Nombre / Razón Social</th>
-            <th className="py-3 px-4 text-right text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Acciones</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-outline-variant">
+    <div className="bg-surface-container-lowest rounded-lg border border-outline-variant shadow-[0_4px_12px_rgba(22,15,12,0.02)] overflow-hidden flex flex-col">
+      <div className="overflow-x-auto">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="bg-surface-container border-b border-outline-variant">
+              <th className="text-[10px] font-bold tracking-wider text-on-surface-variant py-3 px-4 uppercase">N° Documento</th>
+              <th className="text-[10px] font-bold tracking-wider text-on-surface-variant py-3 px-4 uppercase">Tipo</th>
+              <th className="text-[10px] font-bold tracking-wider text-on-surface-variant py-3 px-4 uppercase">Nombre / Razón Social</th>
+              {isAdmin && <th className="text-[10px] font-bold tracking-wider text-on-surface-variant py-3 px-4 uppercase text-right">Acciones</th>}
+            </tr>
+          </thead>
+          <tbody className="text-body-sm text-on-surface divide-y divide-surface-container">
           {clientes.map((c) => {
             const badge = TIPO_BADGE(c.numero_documento);
             const esConsumidorFinal = c.numero_documento === "00000000000";
@@ -49,36 +59,39 @@ export default function TablaClientes({ clientes, onEditar }) {
                 <td className="py-3 px-4">
                   <div className="flex items-center gap-2">
                     {esConsumidorFinal && <Pin className="w-3 h-3 text-secondary" />}
-                    <span className="text-label-caps font-bold text-on-surface-variant bg-surface-container px-2 py-1 rounded-sm">
+                    <span className="text-label-caps font-semibold text-primary-container">
                       {c.numero_documento}
                     </span>
                   </div>
                 </td>
                 <td className="py-3 px-4">
-                  <span className={`text-label-caps font-bold px-2 py-1 rounded-full ${badge.color}`}>
+                  <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${badge.color}`}>
                     {badge.label}
                   </span>
                 </td>
                 <td className="py-3 px-4">
-                  <span className={`text-body-md font-bold ${esConsumidorFinal ? 'text-on-surface-variant italic' : 'text-on-surface group-hover:text-secondary'} transition-colors`}>
+                  <span className={`text-body-sm font-semibold ${esConsumidorFinal ? 'text-on-surface-variant italic' : 'text-on-surface group-hover:text-secondary'} transition-colors`}>
                     {c.nombres_razon_social}
                   </span>
                 </td>
-                <td className="py-3 px-4 text-right">
-                  {!esConsumidorFinal && (
-                    <button
-                      onClick={() => onEditar(c)}
-                      className="p-2 hover:bg-secondary-fixed text-on-surface-variant hover:text-secondary rounded-lg transition-all"
-                    >
-                      <Edit3 className="w-4 h-4" />
-                    </button>
-                  )}
-                </td>
+                {isAdmin && (
+                  <td className="py-3 px-4 text-right">
+                    {!esConsumidorFinal && (
+                      <button
+                        onClick={() => onEditar(c)}
+                        className="p-2 hover:bg-secondary-fixed text-on-surface-variant hover:text-secondary rounded-lg transition-all"
+                      >
+                        <Edit3 className="w-4 h-4" />
+                      </button>
+                    )}
+                  </td>
+                )}
               </tr>
             );
           })}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

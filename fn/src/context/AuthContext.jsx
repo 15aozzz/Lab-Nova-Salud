@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import { authService } from '../services/api';
+import { authService } from '@/services/api';
 
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
@@ -35,8 +35,10 @@ export const AuthProvider = ({ children }) => {
     setUsuarioActual(null);
   };
 
+  const isAdmin = usuarioActual?.cargo === 'Administrador';
+
   return (
-    <AuthContext.Provider value={{ session, usuarioActual, login, logout }}>
+    <AuthContext.Provider value={{ session, usuarioActual, isAdmin, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

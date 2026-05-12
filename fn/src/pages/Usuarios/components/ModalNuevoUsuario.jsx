@@ -1,6 +1,6 @@
 import { X, Save } from "lucide-react";
 import { useState } from "react";
-import { usuariosService } from "../../../services/api";
+import { usuariosService } from "@/services/api";
 
 const estadoInicial = { username: "", password: "", id_empleado: "" };
 

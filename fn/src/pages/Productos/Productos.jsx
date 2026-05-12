@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useProductos } from "./hooks/useProductos";
+import { useAuth } from "@/context/AuthContext";
 import FiltrosProductos from "./components/FiltrosProductos";
 import TablaProductos from "./components/TablaProductos";
-import Paginador from "./components/Paginador";
+import Paginador from "@/components/Paginador/Paginador";
 import DrawerEditarProducto from "./components/DrawerEditarProducto";
 import ModalNuevoProducto from "./components/ModalNuevoProducto";
 import { Loader2 } from "lucide-react";
@@ -22,6 +23,8 @@ export default function Productos() {
     cargando,
     recargar
   } = useProductos();
+
+  const { isAdmin } = useAuth();
 
   const [drawerAbierto, setDrawerAbierto] = useState(false);
   const [modalNuevoAbierto, setModalNuevoAbierto] = useState(false);
@@ -44,6 +47,7 @@ export default function Productos() {
         setFiltros={setFiltros} 
         categorias={categoriasUnicas}
         laboratorios={laboratoriosUnicos}
+        isAdmin={isAdmin}
         onNuevoProducto={() => setModalNuevoAbierto(true)}
       />
 
@@ -59,30 +63,35 @@ export default function Productos() {
           />
         )}
 
-        <Paginador 
-          actual={pagina} 
-          totalResultados={totalResultados} 
-          itemsPorPagina={itemsPorPagina} 
+        <Paginador
+          actual={pagina}
+          totalResultados={totalResultados}
+          itemsPorPagina={itemsPorPagina}
           onCambioPagina={setPagina}
+          etiqueta="productos"
         />
       </div>
 
-      <DrawerEditarProducto 
-        abierto={drawerAbierto}
-        onClose={() => setDrawerAbierto(false)}
-        producto={productoSeleccionado}
-        categorias={categoriasUnicas}
-        laboratorios={laboratoriosUnicos}
-        onGuardado={recargar}
-      />
+      {isAdmin && (
+        <DrawerEditarProducto 
+          abierto={drawerAbierto}
+          onClose={() => setDrawerAbierto(false)}
+          producto={productoSeleccionado}
+          categorias={categoriasUnicas}
+          laboratorios={laboratoriosUnicos}
+          onGuardado={recargar}
+        />
+      )}
 
-      <ModalNuevoProducto 
-        abierto={modalNuevoAbierto}
-        onClose={() => setModalNuevoAbierto(false)}
-        categorias={categoriasUnicas}
-        laboratorios={laboratoriosUnicos}
-        onGuardado={recargar}
-      />
+      {isAdmin && (
+        <ModalNuevoProducto 
+          abierto={modalNuevoAbierto}
+          onClose={() => setModalNuevoAbierto(false)}
+          categorias={categoriasUnicas}
+          laboratorios={laboratoriosUnicos}
+          onGuardado={recargar}
+        />
+      )}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { Search } from "lucide-react";
 import FilaProducto from "./FilaProducto";
 import { useState } from "react";
-import { productosService } from "../../../services/api";
+import { productosService } from "@/services/api";
 
 export default function TablaProductos({ productos, onActualizarCantidad, onEliminar, onAgregar, onCambiarUnidad }) {
   const [busqueda, setBusqueda] = useState("");

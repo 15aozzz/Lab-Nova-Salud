@@ -5,7 +5,7 @@ import KpiCard from "./components/KpiCard";
 import GraficoVentas from "./components/GraficoVentas";
 import AlertasProductos from "./components/AlertasProductos";
 import UltimosComprobantes from "./components/UltimosComprobantes";
-import { dashboardService } from "../../services/api";
+import { dashboardService } from "@/services/api";
 
 export default function DashboardPage() {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ export default function DashboardPage() {
             });
 
             return {
-              day: date.getDate().toString(),
+              day: date.toLocaleDateString('es-PE', { weekday: 'short' }).replace('.', ''),
               sales: found ? parseFloat(found.total_ventas) : 0,
               isToday: date.toDateString() === new Date().toDateString()
             };
@@ -91,10 +91,10 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-card_gap">
-        <div className="lg:col-span-8">
+        <div className="lg:col-span-7">
           <GraficoVentas datos={data.salesData} />
         </div>
-        <div className="lg:col-span-4">
+        <div className="lg:col-span-5">
           <AlertasProductos alertas={data.alertsData} />
         </div>
       </div>

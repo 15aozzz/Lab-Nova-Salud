@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Search, Loader2, UserPlus } from "lucide-react";
 import { useUsuarios } from "./hooks/useUsuarios";
+import { useAuth } from "@/context/AuthContext";
 import TablaUsuarios from "./components/TablaUsuarios";
 import ModalNuevoUsuario from "./components/ModalNuevoUsuario";
 import DrawerEditarUsuario from "./components/DrawerEditarUsuario";
-import PaginadorUsuarios from "./components/PaginadorUsuarios";
+import Paginador from "@/components/Paginador/Paginador";
 
 export default function Usuarios() {
+  const { isAdmin } = useAuth();
   const {
     usuarios,
     totalResultados,
@@ -37,13 +39,15 @@ export default function Usuarios() {
           <h2 className="text-[28px] font-semibold tracking-tight text-primary-container mb-1">Gestión de Usuarios</h2>
           <p className="text-body-md text-on-surface-variant">Administra las cuentas de acceso al sistema.</p>
         </div>
-        <button
-          onClick={() => setModalNuevoAbierto(true)}
-          className="flex items-center gap-2 bg-secondary text-on-secondary px-4 py-[7px] rounded-lg text-body-md font-bold shadow-sm hover:opacity-90 transition-all active:scale-95"
-        >
-          <UserPlus className="w-[18px] h-[18px]" />
-          + Nuevo Usuario
-        </button>
+        {isAdmin && (
+          <button
+            onClick={() => setModalNuevoAbierto(true)}
+            className="flex items-center gap-2 bg-secondary text-on-secondary px-4 py-[7px] rounded-lg text-body-md font-bold shadow-sm hover:opacity-90 transition-all active:scale-95"
+          >
+            <UserPlus className="w-[18px] h-[18px]" />
+            + Nuevo Usuario
+          </button>
+        )}
       </div>
 
       <div className="flex items-center gap-3">
@@ -78,29 +82,34 @@ export default function Usuarios() {
       ) : (
         <div className="space-y-card_gap">
           <TablaUsuarios usuarios={usuarios} onEditar={handleEditar} />
-          <PaginadorUsuarios
+          <Paginador
             actual={pagina}
             totalResultados={totalResultados}
             itemsPorPagina={itemsPorPagina}
             onCambioPagina={setPagina}
+            etiqueta="usuarios"
           />
         </div>
       )}
 
-      <ModalNuevoUsuario
-        abierto={modalNuevoAbierto}
-        onClose={() => setModalNuevoAbierto(false)}
-        onGuardado={recargar}
-        empleados={empleados}
-      />
+      {isAdmin && (
+        <ModalNuevoUsuario
+          abierto={modalNuevoAbierto}
+          onClose={() => setModalNuevoAbierto(false)}
+          onGuardado={recargar}
+          empleados={empleados}
+        />
+      )}
 
-      <DrawerEditarUsuario
-        abierto={drawerAbierto}
-        onClose={() => setDrawerAbierto(false)}
-        usuario={usuarioSeleccionado}
-        onGuardado={recargar}
-        empleados={empleados}
-      />
+      {isAdmin && (
+        <DrawerEditarUsuario
+          abierto={drawerAbierto}
+          onClose={() => setDrawerAbierto(false)}
+          usuario={usuarioSeleccionado}
+          onGuardado={recargar}
+          empleados={empleados}
+        />
+      )}
     </div>
   );
 }

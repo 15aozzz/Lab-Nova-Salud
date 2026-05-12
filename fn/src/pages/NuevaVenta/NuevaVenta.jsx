@@ -34,7 +34,7 @@ export default function NuevaVenta() {
           <ComprobanteInfo info={comprobante} setInfo={setComprobante} />
         </div>
         <div className="lg:col-span-4">
-          <DatosCliente cliente={cliente} setCliente={setCliente} />
+          <DatosCliente cliente={cliente} setCliente={setCliente} comprobanteTipo={comprobante.tipo} />
         </div>
       </div>
 

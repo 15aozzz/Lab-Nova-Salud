@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { usuariosService } from "../../../services/api";
+import { usuariosService } from "@/services/api";
 
 export function useUsuarios() {
   const [usuariosFull, setUsuariosFull] = useState([]);

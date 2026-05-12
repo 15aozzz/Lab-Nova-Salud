@@ -1,9 +1,14 @@
 import { Search, PlusCircle } from "lucide-react";
 import { useState } from "react";
-import { clientesService } from "../../../services/api";
+import { clientesService } from "@/services/api";
+import { useAuth } from "@/context/AuthContext";
 
-export default function DatosCliente({ cliente, setCliente }) {
+const esFactura = (tipo) => tipo?.includes("Factura");
+
+export default function DatosCliente({ cliente, setCliente, comprobanteTipo }) {
+  const { isAdmin } = useAuth();
   const [buscando, setBuscando] = useState(false);
+  const isFactura = esFactura(comprobanteTipo);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -11,8 +16,8 @@ export default function DatosCliente({ cliente, setCliente }) {
   };
 
   const buscarCliente = async () => {
-    if (!cliente.numero || cliente.numero.length < 8) {
-      alert("Ingrese un número de documento válido");
+    if (!cliente.numero || cliente.numero.length < (isFactura ? 11 : 8)) {
+      alert(`Ingrese un número de ${isFactura ? 'RUC' : 'DNI'} válido`);
       return;
     }
     
@@ -38,25 +43,21 @@ export default function DatosCliente({ cliente, setCliente }) {
         <h3 className="text-[11px] font-bold tracking-wider text-primary-container">
           Datos del Cliente
         </h3>
-        <button className="flex items-center gap-1 text-[11px] font-bold text-secondary hover:underline">
-          <PlusCircle className="w-3 h-3" />
-          Nuevo Cliente
-        </button>
+        {isAdmin && (
+          <button className="flex items-center gap-1 text-[11px] font-bold text-secondary hover:underline">
+            <PlusCircle className="w-3 h-3" />
+            Nuevo Cliente
+          </button>
+        )}
       </div>
 
       <div className="space-y-5 flex-1">
         <div className="grid grid-cols-3 gap-2">
           <div className="col-span-1">
             <label className="text-[11px] font-bold tracking-wider text-primary-container mb-1 block">Doc.</label>
-            <select 
-              name="tipoDoc"
-              value={cliente.tipoDoc}
-              onChange={handleChange}
-              className="w-full bg-surface-container-lowest border border-outline-variant rounded px-2 py-[7px] text-body-md font-bold text-on-surface outline-none"
-            >
-              <option>DNI</option>
-              <option>RUC</option>
-            </select>
+            <span className="flex items-center justify-center w-full bg-surface-container text-on-surface-variant rounded px-2 py-[7px] text-body-sm font-bold">
+              {isFactura ? "RUC" : "DNI"}
+            </span>
           </div>
           <div className="col-span-2">
             <label className="text-[11px] font-bold tracking-wider text-primary-container mb-1 block">Número</label>
@@ -64,7 +65,8 @@ export default function DatosCliente({ cliente, setCliente }) {
               <input 
                 type="text"
                 name="numero"
-                placeholder="Ej: 7245..."
+                placeholder={isFactura ? "Ej. 20123456789" : "Ej. 12345678"}
+                maxLength={isFactura ? 11 : 8}
                 value={cliente.numero}
                 onChange={handleChange}
                 className="w-full bg-surface-container-lowest border border-outline-variant rounded pl-3 pr-10 py-[7px] text-body-md text-on-surface outline-none"

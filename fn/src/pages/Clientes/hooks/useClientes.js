@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { clientesService } from "../../../services/api";
+import { clientesService } from "@/services/api";
 
 export function useClientes() {
   const [clientesFull, setClientesFull] = useState([]);
